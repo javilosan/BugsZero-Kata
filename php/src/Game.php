@@ -5,6 +5,12 @@ function echoln($string) {
 }
 
 class Game {
+    const MINIMUN_PLAYER_COUNT = 2;
+    const MAXIMUM_PLAYER_COUNT = 7;
+    const BOARD_SIZE = 12;
+    const WIN_SCORE = 6;
+    const NUMBER_OF_QUESTIONS = 50;
+
     var $players;
     var $places;
     var $purses ;
@@ -30,20 +36,16 @@ class Game {
         $this->sportsQuestions = array();
         $this->rockQuestions = array();
 
-        for ($i = 0; $i < 50; $i++) {
-			array_push($this->popQuestions, "Pop Question " . $i);
-			array_push($this->scienceQuestions, ("Science Question " . $i));
-			array_push($this->sportsQuestions, ("Sports Question " . $i));
-			array_push($this->rockQuestions, $this->createRockQuestion($i));
-    	}
+        $this->prepareQuestions(self::NUMBER_OF_QUESTIONS);
     }
 
 	function createRockQuestion($index){
 		return "Rock Question " . $index;
 	}
 
-	function isPlayable() {
-		return ($this->howManyPlayers() >= 2);
+	public function isPlayable() {
+		return ($this->howManyPlayers() >= self::MINIMUN_PLAYER_COUNT
+            && $this->howManyPlayers() <= self::MAXIMUM_PLAYER_COUNT);
 	}
 
 	function add($playerName) {
@@ -53,7 +55,7 @@ class Game {
 	   $this->inPenaltyBox[$this->howManyPlayers()] = false;
 
 	    echoln($playerName . " was added");
-	    echoln("They are player number " . count($this->players));
+	    echoln("They are player number " . $this->howManyPlayers());
 		return true;
 	}
 
@@ -71,7 +73,8 @@ class Game {
 
 				echoln($this->players[$this->currentPlayer] . " is getting out of the penalty box");
 			$this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
-				if ($this->places[$this->currentPlayer] > 11) $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - 12;
+                //TODO: Extraer a funcion
+				if ($this->places[$this->currentPlayer] >= self::BOARD_SIZE) $this->places[$this->currentPlayer] -= self::BOARD_SIZE;
 
 				echoln($this->players[$this->currentPlayer]
 						. "'s new location is "
@@ -86,7 +89,8 @@ class Game {
 		} else {
 
 		$this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
-			if ($this->places[$this->currentPlayer] > 11) $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - 12;
+        //TODO: Extraer a funcion
+			if ($this->places[$this->currentPlayer] >= self::BOARD_SIZE) $this->places[$this->currentPlayer] -= self::BOARD_SIZE;
 
 			echoln($this->players[$this->currentPlayer]
 					. "'s new location is "

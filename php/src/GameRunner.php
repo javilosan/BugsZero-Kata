@@ -13,19 +13,17 @@ class GameRunner {
         $aGame->add("Sue");
 
 
-        do {
+        if ($aGame->isPlayable()) {
+            do {
+                $aGame->roll(mt_rand(0,5) + 1);
 
-            $aGame->roll(rand(0,5) + 1);
-
-            if (rand(0,9) == 7) {
-                $notAWinner = $aGame->wrongAnswer();
-            } else {
-                $notAWinner = $aGame->wasCorrectlyAnswered();
-            }
-
-
-
-        } while ($notAWinner);
+                if (mt_rand(0,9) === 7) {
+                    $notAWinner = $aGame->wrongAnswer();
+                } else {
+                    $notAWinner = $aGame->wasCorrectlyAnswered();
+                }
+            } while ($notAWinner);
+        }
     }
 }
 
