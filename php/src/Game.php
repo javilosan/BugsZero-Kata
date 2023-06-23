@@ -3,7 +3,7 @@ namespace Game;
 function echoln($string) {
   echo $string."\n";
 }
-
+//TODO: Hacer un esquema del juego rollo Excalidraw, Miro, ... y mira qué partes vamos a refactorizar
 class Game {
     const MINIMUN_PLAYER_COUNT = 2;
     const MAXIMUM_PLAYER_COUNT = 7;
@@ -13,7 +13,7 @@ class Game {
 
     var $players;
     var $places;
-    var $purses ;
+    var $purses;
     var $inPenaltyBox ;
 
     var $popQuestions;
@@ -178,6 +178,20 @@ class Game {
 
 
 	function didPlayerWin() {
-		return !($this->purses[$this->currentPlayer] == 6);
+		return !($this->purses[$this->currentPlayer] == self::WIN_SCORE);
 	}
+
+    /**
+     * @param int $numberOfQuestions
+     * @return void
+     */
+    private function prepareQuestions($numberOfQuestions)
+    {
+        for ($i = 0; $i < $numberOfQuestions; $i++) {
+            array_push($this->popQuestions, "Pop Question " . $i);
+            array_push($this->scienceQuestions, ("Science Question " . $i));
+            array_push($this->sportsQuestions, ("Sports Question " . $i));
+            array_push($this->rockQuestions, $this->createRockQuestion($i));
+        }
+    }
 }
