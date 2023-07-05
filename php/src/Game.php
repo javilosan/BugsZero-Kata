@@ -3,7 +3,7 @@ namespace Game;
 function echoln($string) {
     echo $string."\n";
 }
-//TODO: Hacer un esquema del juego rollo Excalidraw, Miro, ... y mira qué partes vamos a refactorizar
+
 class Game {
     const MINIMUN_PLAYER_COUNT = 2;
     const MAXIMUM_PLAYER_COUNT = 7;
