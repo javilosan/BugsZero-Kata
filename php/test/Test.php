@@ -7,12 +7,12 @@ class GameTest extends TestCase
 {
 
 
-    public function testLockDownr()
+    public function testGameIsPLayable()
     {
         srand(123455);
         ob_start();
 
-        GameRunner::runGame();
+        GameRunner::runGame(["Chet", "Pat", "Sue"]);
 
         $actual = ob_get_contents();
         ob_end_clean();
